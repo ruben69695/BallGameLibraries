@@ -158,7 +158,7 @@ Namespace Helpers
 
 
         ' Constructor '
-        Public Sub New(xColor As Color, Owner As String, movX As Integer, movY As Integer, Diametre As Integer, FormMain As Form, Interv As Integer, Paddle As ClPaddle, PosX As Integer, PosY As Integer, ResX As Integer, ResY As Integer, Life As String)
+        Public Sub New(xColor As Color, Owner As String, movX As Integer, movY As Integer, Diametre As Integer, FormMain As Form, Interv As Integer, Paddle As ClPaddle, PosX As Integer, PosY As Integer, ResX As Integer, ResY As Integer, Life As Integer)
 
             _frmMain = FormMain
             _color = xColor
@@ -171,6 +171,8 @@ Namespace Helpers
             _owner = Owner
             _movX = movX
             _movY = movY
+            _interv = Interv
+            _life = Life
 
             newBall()
             startTimers()
@@ -199,7 +201,7 @@ Namespace Helpers
         Private Sub startTimers()
             'Ball Movement Timer
             tmMove = New Timers.Timer()
-            tmMove.Interval = IntMov
+            tmMove.Interval = _interv
             tmMove.Start()
 
             'Ball hit the Paddle Timer
@@ -280,7 +282,7 @@ Namespace Helpers
                        End Sub)
         End Sub
 
-        Private Property PosX As Integer
+        Public Property PosX As Integer
             Get
                 Return _posX
             End Get
