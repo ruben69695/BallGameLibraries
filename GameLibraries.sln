@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketHelpers", "..\SocketHelpers\SocketHelpers.csproj", "{9E74D0A7-1E4C-4E2A-8B80-C281565D494A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketHelpers", "SocketHelpers\SocketHelpers.csproj", "{9E74D0A7-1E4C-4E2A-8B80-C281565D494A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{304B57B3-3BE9-4081-8723-BEC4B17D32A5} = {304B57B3-3BE9-4081-8723-BEC4B17D32A5}
 	EndProjectSection
