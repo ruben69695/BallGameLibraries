@@ -20,34 +20,12 @@ Namespace Helpers
     End Class
 
     Public Class ClClient
-        Public Property Name As String
-            Get
-                Return Nothing
-            End Get
+        Public Name As String
+        Public IP As String
 
-            Set(value As String)
-            End Set
-
-        End Property
-
-        Public Property Ip As String
-            Get
-                Return Nothing
-            End Get
-            Set(value As String)
-            End Set
-        End Property
-
-        Public Sub ClClient(IP As String, Name As String)
-
-        End Sub
-
-        Public Sub Connect()
-
-        End Sub
-
-        Public Sub ChoosePos(PosList As System.Collections.ArrayList)
-
+        Public Sub New(xname As String, xip As String)
+            Name = xname
+            IP = xip
         End Sub
     End Class
 
@@ -496,6 +474,13 @@ Namespace Helpers
         Public cliente As ClClient
         Public pos As Int32
         Public wall As Int32
+
+        Public Sub New(_pcs() As ClClient, _cliente As ClClient, _pos As Int32, _wall As Int32)
+            pcs = _pcs
+            cliente = _cliente
+            pos = _pos
+            wall = _wall
+        End Sub
     End Class
 
     Public Class Ball
