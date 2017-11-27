@@ -61,7 +61,7 @@ namespace SocketHelpers
             }
             catch (Exception e)
             {
-                ClErrors.reportError(e.Message);
+                Console.WriteLine(e.Message);
             }
             return done;
         }
@@ -87,7 +87,7 @@ namespace SocketHelpers
             }
             catch (Exception e)
             {
-                ClErrors.reportError(e.Message);
+                Console.WriteLine(e.Message);
             }
             return done;
         }
@@ -105,7 +105,7 @@ namespace SocketHelpers
             }
             catch (Exception e)
             {
-                ClErrors.reportError(e.Message);
+                Console.WriteLine(e.Message);
             }
 
             return done;
@@ -147,14 +147,14 @@ namespace SocketHelpers
                         }
                         catch (Exception e)
                         {
-                            ClErrors.reportError(e.Message);
+                            Console.WriteLine(e.Message);
                         }
                     }
-                    else ClErrors.reportError("I can't write to the socketLeft.");
+                    else Console.WriteLine("I can't write to the socketLeft.");
                 }
-                else ClErrors.reportError("Empty string.");
+                else Console.WriteLine("Empty string.");
             }
-            else ClErrors.reportError("Socket not connected.");
+            else Console.WriteLine("Socket not connected.");
         }
 
         public void sendDataRight(String data)
@@ -171,14 +171,14 @@ namespace SocketHelpers
                         }
                         catch (Exception e)
                         {
-                            ClErrors.reportError(e.Message);
+                            Console.WriteLine(e.Message);
                         }
                     }
-                    else ClErrors.reportError("I can't write to the socketRight.");
+                    else Console.WriteLine("I can't write to the socketRight.");
                 }
-                else ClErrors.reportError("Empty string.");
+                else Console.WriteLine("Empty string.");
             }
-            else ClErrors.reportError("Socket not connected.");
+            else Console.WriteLine("Socket not connected.");
 
         }
 

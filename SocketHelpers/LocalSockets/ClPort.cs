@@ -24,7 +24,7 @@ namespace SocketHelpers
             }
             else
             {
-                ClErrors.reportError("Incorrect IP value.");
+                Console.WriteLine("Incorrect IP value.");
             }
             return port;
         }
