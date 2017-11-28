@@ -203,12 +203,17 @@ Namespace Helpers
             If ((((PosX <= 0)) Or (PosX >= (_frmMain.Width - Diametre)))) Then
                 tmMove.Stop()
 
-                ' Llamada a evento
-                RaiseEvent wallhit(Me, EventArgs.Empty)
-
                 pan.Invoke(Sub()
                                _frmMain.Controls.Remove(pan)
+                               Me.tmMove.Enabled = False
                            End Sub)
+
+                ' Llamada a evento
+                RaiseEvent wallhit(Me, EventArgs.Empty)
+                Return
+
+
+
 
             ElseIf (PosX <= 0 Or PosX >= (_frmMain.Width - Diametre)) Then
                 dx = -dx - _vel
@@ -223,9 +228,7 @@ Namespace Helpers
                     tmTocada.Start()            ' Tornem a començar el Timer
                     'RaiseEvent haRebotat(Me, EventArgs.Empty)
                 End If
-            End If
-
-            If (((PosX <= _paddle.PosX + _paddle.Paddle_Width) And (PosX > _paddle.PosX)) Or ((PosX + Diametre >= _paddle.PosX) And (PosX < _paddle.PosX + _paddle.Paddle_Width))) Then
+            ElseIf (((PosX <= _paddle.PosX + _paddle.Paddle_Width) And (PosX > _paddle.PosX)) Or ((PosX + Diametre >= _paddle.PosX) And (PosX < _paddle.PosX + _paddle.Paddle_Width))) Then
                 If ((PosY + Diametre >= _paddle.PosY) And (PosY <= _paddle.PosY + _paddle.Paddle_Height) Or ((PosY + Diametre <= _paddle.PosY) And (PosY >= _paddle.PosY))) Then
                     dy = -dy
                     'choque = True
@@ -494,6 +497,7 @@ Namespace Helpers
         Public color As Integer
         Public diameter As Integer
         Public life As Integer
+        Public intervalo As Integer
     End Class
 
 End Namespace
