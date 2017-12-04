@@ -106,6 +106,7 @@ Namespace Helpers
     End Class
 
     Public Class ClBall
+        Implements IDisposable
 
         ' Constants'
         Const IntMov = 30
@@ -130,6 +131,8 @@ Namespace Helpers
         Private random As New Random()
         Private WithEvents tmMove As Timers.Timer
         Private WithEvents tmTocada As Timers.Timer
+        Private _directionX As Integer
+        Private _directionY As Integer
         Public Event wallhit As EventHandler
 
         'Private FormMain As Form, Interv As Integer, Paddle As ClPaddle, PosX As Integer, PosY As Integer, ResX As Integer, ResY As Integer, Life As String
@@ -194,35 +197,33 @@ Namespace Helpers
 
         Public Sub Move()
 
+            'tmMove.Stop()
+
             Static dx = MovX, dy = MovY
 
             ' Control if the ball hit the wall
             If ((PosY <= 0) Or (PosY >= (_frmMain.Height - Diametre))) Then
                 dy = -dy - _vel
+                DirectionY = dy
             End If
             If ((((PosX <= 0)) Or (PosX >= (_frmMain.Width - Diametre)))) Then
-                tmMove.Stop()
 
-                pan.Invoke(Sub()
-                               _frmMain.Controls.Remove(pan)
-                               Me.tmMove.Enabled = False
-                           End Sub)
-
-                ' Llamada a evento
-                RaiseEvent wallhit(Me, EventArgs.Empty)
-                Return
-
-
-
-
-            ElseIf (PosX <= 0 Or PosX >= (_frmMain.Width - Diametre)) Then
                 dx = -dx - _vel
+                DirectionX = dx
+
+                RaiseEvent wallhit(Me, EventArgs.Empty)
+
+                'ElseIf (PosX <= 0 Or PosX >= (_frmMain.Width - Diametre)) Then
+                '    dx = -dx - _vel
+                '    DirectionX = dx
+                'End If
             End If
 
             ' Control if the ball hit the paddle 
             If ((PosY >= _paddle.PosY) And (PosY <= _paddle.PosY + _paddle.Paddle_Height)) Then
                 If (((PosX <= _paddle.PosX + _paddle.Paddle_Width) And (PosX > _paddle.PosX)) Or ((PosX + Diametre >= _paddle.PosX) And (PosX < _paddle.PosX + _paddle.Paddle_Width))) Then
                     dx = -dx
+                    DirectionX = dx
                     'choque = True
                     tmTocada.Stop()
                     tmTocada.Start()            ' Tornem a començar el Timer
@@ -231,6 +232,7 @@ Namespace Helpers
             ElseIf (((PosX <= _paddle.PosX + _paddle.Paddle_Width) And (PosX > _paddle.PosX)) Or ((PosX + Diametre >= _paddle.PosX) And (PosX < _paddle.PosX + _paddle.Paddle_Width))) Then
                 If ((PosY + Diametre >= _paddle.PosY) And (PosY <= _paddle.PosY + _paddle.Paddle_Height) Or ((PosY + Diametre <= _paddle.PosY) And (PosY >= _paddle.PosY))) Then
                     dy = -dy
+                    DirectionY = dy
                     'choque = True
                     tmTocada.Stop()
                     tmTocada.Start()                ' Tornem a començar el Timer
@@ -245,22 +247,43 @@ Namespace Helpers
             PosY += dy
 
             ' CONTROLEM SI SURT DE LA PANTALLA
-            If (PosX < 0) Then
-                PosX = 0
-            End If
-            If (PosX > _frmMain.Width - Diametre) Then
-                PosX = _frmMain.Width - Diametre
-            End If
-            If (PosY < 0) Then
-                PosY = 0
-            End If
-            If (PosY > (_frmMain.Height - Diametre)) Then
-                PosY = _frmMain.Height - Diametre
-            End If
+            'If (PosX < 0) Then
+            '    PosX = 0
+            'End If
+            'If (PosX > _frmMain.Width - Diametre) Then
+            '    PosX = _frmMain.Width - Diametre
+            'End If
+            'If (PosY < 0) Then
+            '    PosY = 0
+            'End If
+            'If (PosY > (_frmMain.Height - Diametre)) Then
+            '    PosY = _frmMain.Height - Diametre
+            'End If
 
             pan.Invoke(Sub()
                            pan.Location = New Point(PosX, PosY)
                        End Sub)
+
+        End Sub
+
+        Public Sub RemoveBall()
+            pan.Invoke(Sub()
+
+                           _frmMain.Controls.Remove(pan)
+                           Me.tmMove.Stop()
+                           Me.tmMove.Enabled = False
+
+                       End Sub)
+        End Sub
+
+        Public Sub PararPelota()
+            tmMove.Stop()
+            tmMove.Enabled = False
+        End Sub
+
+        Public Sub EncenderPelota()
+            tmMove.Enabled = True
+            tmMove.Start()
         End Sub
 
         Public Property PosX As Integer
@@ -269,6 +292,24 @@ Namespace Helpers
             End Get
             Set(value As Integer)
                 _posX = value
+            End Set
+        End Property
+
+        Public Property DirectionX As Integer
+            Get
+                Return _directionX
+            End Get
+            Set(value As Integer)
+                _directionX = value
+            End Set
+        End Property
+
+        Public Property DirectionY As Integer
+            Get
+                Return _directionY
+            End Get
+            Set(value As Integer)
+                _directionY = value
             End Set
         End Property
 
@@ -370,6 +411,40 @@ Namespace Helpers
                 _paddle = value
             End Set
         End Property
+
+#Region "IDisposable Support"
+        Private disposedValue As Boolean ' Para detectar llamadas redundantes
+
+        ' IDisposable
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    ' TODO: elimine el estado administrado (objetos administrados).
+                    tmMove.Stop()
+                    tmTocada.Stop()
+                End If
+
+                ' TODO: libere los recursos no administrados (objetos no administrados) y reemplace Finalize() a continuación.
+                ' TODO: configure los campos grandes en nulos.
+            End If
+            disposedValue = True
+        End Sub
+
+        ' TODO: reemplace Finalize() solo si el anterior Dispose(disposing As Boolean) tiene código para liberar recursos no administrados.
+        'Protected Overrides Sub Finalize()
+        '    ' No cambie este código. Coloque el código de limpieza en el anterior Dispose(disposing As Boolean).
+        '    Dispose(False)
+        '    MyBase.Finalize()
+        'End Sub
+
+        ' Visual Basic agrega este código para implementar correctamente el patrón descartable.
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' No cambie este código. Coloque el código de limpieza en el anterior Dispose(disposing As Boolean).
+            Dispose(True)
+            ' TODO: quite la marca de comentario de la siguiente línea si Finalize() se ha reemplazado antes.
+            ' GC.SuppressFinalize(Me)
+        End Sub
+#End Region
     End Class
 
     Public Class ClPaddle
