@@ -27,3 +27,4 @@ C:\Users\Ruben\OneDrive\Estudios\Educem\DAM3-ASIX\NET\Projects\4-SocketBall\Libr
 C:\Users\Ruben\OneDrive\Estudios\Educem\DAM3-ASIX\NET\Projects\4-SocketBall\Libraries\BallGameLibraries\GameHelpers\obj\Debug\GameHelpers.dll
 C:\Users\Ruben\OneDrive\Estudios\Educem\DAM3-ASIX\NET\Projects\4-SocketBall\Libraries\BallGameLibraries\GameHelpers\obj\Debug\GameHelpers.xml
 C:\Users\Ruben\OneDrive\Estudios\Educem\DAM3-ASIX\NET\Projects\4-SocketBall\Libraries\BallGameLibraries\GameHelpers\obj\Debug\GameHelpers.pdb
+C:\Users\Ruben\OneDrive\Estudios\Educem\DAM3-ASIX\NET\Projects\4-SocketBall\Libraries\BallGameLibraries\GameHelpers\obj\Debug\GameHelpers.vbprojResolveAssemblyReference.cache
