@@ -201,12 +201,14 @@ Namespace Helpers
 
                 Static dx = MovX, dy = MovY
 
+                If dy = 0 Then
+                    dy = 10
+                    DirectionY = dy
+                End If
+
                 ' Control if the ball hit the wall
                 If ((PosY <= 0) Or (PosY >= (_frmMain.Height - Diametre))) Then
                     dy = -dy - _vel
-                    If dy = 0 Then
-                        dy = DirectionY
-                    End If
                     DirectionY = dy
                 End If
                 If ((((PosX <= 0)) Or (PosX >= (_frmMain.Width - Diametre)))) Then
