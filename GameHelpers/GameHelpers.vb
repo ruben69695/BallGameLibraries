@@ -204,6 +204,9 @@ Namespace Helpers
                 ' Control if the ball hit the wall
                 If ((PosY <= 0) Or (PosY >= (_frmMain.Height - Diametre))) Then
                     dy = -dy - _vel
+                    If dy = 0 Then
+                        dy = DirectionY
+                    End If
                     DirectionY = dy
                 End If
                 If ((((PosX <= 0)) Or (PosX >= (_frmMain.Width - Diametre)))) Then
@@ -253,12 +256,12 @@ Namespace Helpers
                 'If (PosX > _frmMain.Width - Diametre) Then
                 '    PosX = _frmMain.Width - Diametre
                 'End If
-                'If (PosY < 0) Then
-                '    PosY = 0
-                'End If
-                'If (PosY > (_frmMain.Height - Diametre)) Then
-                '    PosY = _frmMain.Height - Diametre
-                'End If
+                If (PosY < 0) Then
+                    PosY = 0
+                End If
+                If (PosY > (_frmMain.Height - Diametre)) Then
+                    PosY = _frmMain.Height - Diametre
+                End If
 
                 pan.Invoke(Sub()
                                pan.Location = New Point(PosX, PosY)
