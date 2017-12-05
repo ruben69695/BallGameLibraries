@@ -72,6 +72,11 @@ namespace SocketHelpers
             //data = "{\"pcs\":[{\"Name\":\"Chikorita\",\"Ip\":\"192.168.3.45\"},{\"Name\":\"Ruben\",\"Ip\":\"192.168.3.58\"}],\"cliente\":{\"Name\":\"Abraham\",\"Ip\":\"192.168.3.1\"},\"pos\":2,\"wall\":0}";
             socketServer.Emit("selectPosition", data);
         }
+
+        public void refreshGameInfo()
+        {
+            socketServer.Emit("refreshGameInfo", "");
+        }
     }
 
 }
