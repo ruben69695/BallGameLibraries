@@ -207,12 +207,12 @@ Namespace Helpers
                         dy = 10
                         DirectionY = dy
                     End If
-                    dy = -dy - _vel
+                    dy = -dy
                     DirectionY = dy
                 End If
                 If ((((PosX <= 0)) Or (PosX >= (_frmMain.Width - Diametre)))) Then
 
-                    dx = -dx - _vel
+                    dx = -dx
                     DirectionX = dx
 
                     RaiseEvent wallhit(Me, EventArgs.Empty)
@@ -249,6 +249,11 @@ Namespace Helpers
 
                 PosX += dx
                 PosY += dy
+
+                MovX = dx
+                MovY = dy
+                DirectionX = dx
+                DirectionY = dy
 
                 ' CONTROLEM SI SURT DE LA PANTALLA
                 'If (PosX < 0) Then
