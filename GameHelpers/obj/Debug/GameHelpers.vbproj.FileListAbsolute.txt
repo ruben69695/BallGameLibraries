@@ -18,3 +18,13 @@ C:\Users\Ruben\OneDrive\Estudios\Educem\DAM3-ASIX\NET\Projects\4-SocketBall\Ball
 C:\Users\Ruben\OneDrive\Estudios\Educem\DAM3-ASIX\NET\Projects\4-SocketBall\BallGameLibraries\GameHelpers\obj\Debug\GameHelpers.xml
 C:\Users\Ruben\OneDrive\Estudios\Educem\DAM3-ASIX\NET\Projects\4-SocketBall\BallGameLibraries\GameHelpers\obj\Debug\GameHelpers.pdb
 C:\Users\Ruben\OneDrive\Estudios\Educem\DAM3-ASIX\NET\Projects\4-SocketBall\BallGameLibraries\GameHelpers\obj\Debug\GameHelpers.vbprojResolveAssemblyReference.cache
+C:\Users\marc\Source\Repos\BallGameLibraries\GameHelpers\bin\Debug\GameHelpers.dll
+C:\Users\marc\Source\Repos\BallGameLibraries\GameHelpers\bin\Debug\GameHelpers.pdb
+C:\Users\marc\Source\Repos\BallGameLibraries\GameHelpers\bin\Debug\GameHelpers.xml
+C:\Users\marc\Source\Repos\BallGameLibraries\GameHelpers\obj\Debug\GameHelpers.vbprojResolveAssemblyReference.cache
+C:\Users\marc\Source\Repos\BallGameLibraries\GameHelpers\obj\Debug\GameHelpers.Resources.resources
+C:\Users\marc\Source\Repos\BallGameLibraries\GameHelpers\obj\Debug\GameHelpers.vbproj.GenerateResource.Cache
+C:\Users\marc\Source\Repos\BallGameLibraries\GameHelpers\obj\Debug\GameHelpers.vbproj.CoreCompileInputs.cache
+C:\Users\marc\Source\Repos\BallGameLibraries\GameHelpers\obj\Debug\GameHelpers.dll
+C:\Users\marc\Source\Repos\BallGameLibraries\GameHelpers\obj\Debug\GameHelpers.xml
+C:\Users\marc\Source\Repos\BallGameLibraries\GameHelpers\obj\Debug\GameHelpers.pdb

@@ -49,6 +49,7 @@ namespace SocketHelpers
                 if (socketLeft != null)
                 {
                     portTalker = ClPort.GeneratePorts(neighborIp);
+                    
                     disconnectSocketLeft();                    
                     socketLeft.Connect(neighborIp, portTalker);
                     done = true;
@@ -111,13 +112,13 @@ namespace SocketHelpers
             return done;
         }
 
-        private void disconnectSocketLeft()
+        public void disconnectSocketLeft()
         {
             if (socketLeft.Connected)
                 socketLeft.Close();
         }
 
-        private void disconnectSocketRight()
+        public void disconnectSocketRight()
         {
             if (socketRight.Connected)
                 socketRight.Close();
