@@ -196,73 +196,85 @@ Namespace Helpers
         End Sub
 
         Public Sub Move()
+            Try
+                'tmMove.Stop()
 
-            'tmMove.Stop()
+                Static dx = MovX, dy = MovY
 
-            Static dx = MovX, dy = MovY
-
-            ' Control if the ball hit the wall
-            If ((PosY <= 0) Or (PosY >= (_frmMain.Height - Diametre))) Then
-                dy = -dy - _vel
-                DirectionY = dy
-            End If
-            If ((((PosX <= 0)) Or (PosX >= (_frmMain.Width - Diametre)))) Then
-
-                dx = -dx - _vel
-                DirectionX = dx
-
-                RaiseEvent wallhit(Me, EventArgs.Empty)
-
-                'ElseIf (PosX <= 0 Or PosX >= (_frmMain.Width - Diametre)) Then
-                '    dx = -dx - _vel
-                '    DirectionX = dx
-                'End If
-            End If
-
-            ' Control if the ball hit the paddle 
-            If ((PosY >= _paddle.PosY) And (PosY <= _paddle.PosY + _paddle.Paddle_Height)) Then
-                If (((PosX <= _paddle.PosX + _paddle.Paddle_Width) And (PosX > _paddle.PosX)) Or ((PosX + Diametre >= _paddle.PosX) And (PosX < _paddle.PosX + _paddle.Paddle_Width))) Then
-                    dx = -dx
-                    DirectionX = dx
-                    'choque = True
-                    tmTocada.Stop()
-                    tmTocada.Start()            ' Tornem a començar el Timer
-                    'RaiseEvent haRebotat(Me, EventArgs.Empty)
-                End If
-            ElseIf (((PosX <= _paddle.PosX + _paddle.Paddle_Width) And (PosX > _paddle.PosX)) Or ((PosX + Diametre >= _paddle.PosX) And (PosX < _paddle.PosX + _paddle.Paddle_Width))) Then
-                If ((PosY + Diametre >= _paddle.PosY) And (PosY <= _paddle.PosY + _paddle.Paddle_Height) Or ((PosY + Diametre <= _paddle.PosY) And (PosY >= _paddle.PosY))) Then
+                ' Control if the ball hit the wall
+                If ((PosY <= 0) Or (PosY >= (_frmMain.Height - Diametre))) Then
+                    If dy = 0 Then
+                        dy = 10
+                        DirectionY = dy
+                    End If
                     dy = -dy
                     DirectionY = dy
-                    'choque = True
-                    tmTocada.Stop()
-                    tmTocada.Start()                ' Tornem a començar el Timer
-                    'RaiseEvent haRebotat(Me, EventArgs.Empty)
                 End If
-            End If
+                If ((((PosX <= 0)) Or (PosX >= (_frmMain.Width - Diametre)))) Then
 
-            'x = _posX + dx
-            'y = _posY + dy
+                    dx = -dx
+                    DirectionX = dx
 
-            PosX += dx
-            PosY += dy
+                    RaiseEvent wallhit(Me, EventArgs.Empty)
 
-            ' CONTROLEM SI SURT DE LA PANTALLA
-            'If (PosX < 0) Then
-            '    PosX = 0
-            'End If
-            'If (PosX > _frmMain.Width - Diametre) Then
-            '    PosX = _frmMain.Width - Diametre
-            'End If
-            'If (PosY < 0) Then
-            '    PosY = 0
-            'End If
-            'If (PosY > (_frmMain.Height - Diametre)) Then
-            '    PosY = _frmMain.Height - Diametre
-            'End If
+                    'ElseIf (PosX <= 0 Or PosX >= (_frmMain.Width - Diametre)) Then
+                    '    dx = -dx - _vel
+                    '    DirectionX = dx
+                    'End If
+                End If
 
-            pan.Invoke(Sub()
-                           pan.Location = New Point(PosX, PosY)
-                       End Sub)
+                ' Control if the ball hit the paddle 
+                If ((PosY >= _paddle.PosY) And (PosY <= _paddle.PosY + _paddle.Paddle_Height)) Then
+                    If (((PosX <= _paddle.PosX + _paddle.Paddle_Width) And (PosX > _paddle.PosX)) Or ((PosX + Diametre >= _paddle.PosX) And (PosX < _paddle.PosX + _paddle.Paddle_Width))) Then
+                        dx = -dx
+                        DirectionX = dx
+                        'choque = True
+                        tmTocada.Stop()
+                        tmTocada.Start()            ' Tornem a començar el Timer
+                        'RaiseEvent haRebotat(Me, EventArgs.Empty)
+                    End If
+                ElseIf (((PosX <= _paddle.PosX + _paddle.Paddle_Width) And (PosX > _paddle.PosX)) Or ((PosX + Diametre >= _paddle.PosX) And (PosX < _paddle.PosX + _paddle.Paddle_Width))) Then
+                    If ((PosY + Diametre >= _paddle.PosY) And (PosY <= _paddle.PosY + _paddle.Paddle_Height) Or ((PosY + Diametre <= _paddle.PosY) And (PosY >= _paddle.PosY))) Then
+                        dy = -dy
+                        DirectionY = dy
+                        'choque = True
+                        tmTocada.Stop()
+                        tmTocada.Start()                ' Tornem a començar el Timer
+                        'RaiseEvent haRebotat(Me, EventArgs.Empty)
+                    End If
+                End If
+
+                'x = _posX + dx
+                'y = _posY + dy
+
+                PosX += dx
+                PosY += dy
+
+                MovX = dx
+                MovY = dy
+                DirectionX = dx
+                DirectionY = dy
+
+                ' CONTROLEM SI SURT DE LA PANTALLA
+                'If (PosX < 0) Then
+                '    PosX = 0
+                'End If
+                'If (PosX > _frmMain.Width - Diametre) Then
+                '    PosX = _frmMain.Width - Diametre
+                'End If
+                If (PosY < 0) Then
+                    PosY = 0
+                End If
+                If (PosY > (_frmMain.Height - Diametre)) Then
+                    PosY = _frmMain.Height - Diametre
+                End If
+
+                pan.Invoke(Sub()
+                               pan.Location = New Point(PosX, PosY)
+                           End Sub)
+            Catch ex As Exception
+
+            End Try
 
         End Sub
 
