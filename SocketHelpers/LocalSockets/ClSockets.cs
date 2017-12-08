@@ -34,10 +34,11 @@ namespace SocketHelpers
         }
         #endregion
 
-        public ClSockets()
+        public ClSockets(String yourIpString)
         {
             socketLeft = new TcpClient();
             socketRight = new TcpClient();
+            connectSocketListener(yourIpString);
         }
 
         public Boolean connectSocketLeft(String neighborIp)
@@ -93,7 +94,7 @@ namespace SocketHelpers
             return done;
         }
 
-        public Boolean connectSocketListener(String yourIpString)
+        private Boolean connectSocketListener(String yourIpString)
         {
             Boolean done = false;
             try
@@ -108,8 +109,18 @@ namespace SocketHelpers
             {
                 Console.WriteLine(e.Message);
             }
-
             return done;
+        }
+
+        public void fullDisconnect()
+        {
+            disconnectSocketLeft();
+            disconnectSocketRight();
+            disconnectSocketListener();
+            socketClientListener.Close();
+            socketClientListener1.Close();
+            listenerThread1.Abort();
+            listenerThread2.Abort();
         }
 
         public void disconnectSocketLeft()
@@ -131,7 +142,6 @@ namespace SocketHelpers
                 socketListener.Stop();
                 listenerThread.Abort();
             }
-
         }
 
         public void sendDataLeft(String data)
@@ -205,11 +215,13 @@ namespace SocketHelpers
                             listenerThread2 = new Thread(listenClient2);
                             listenerThread2.Start();
                         }
-                    }
-                    
-                    
-                }               
-            } while (socketClientListener == null||!socketClientListener.Connected || socketClientListener1 == null|| !socketClientListener1.Connected);            
+                    }                                        
+                }
+                //Poniendo el while true hacemos que el do while se ejecute siempre, para estar intentando añadir clientes aunque ya tenga izquierda y derecha conectados
+                //asi podemos escuchar a un cliente nuevo cuando alguno de los anteriores se deconecte
+            } while (true);
+            //Esto hace que haga el do while mientras uno de los socketClientListener no este connectado
+            //} while (socketClientListener == null||!socketClientListener.Connected || socketClientListener1 == null|| !socketClientListener1.Connected);            
         }
 
         private void listenClient1()
@@ -224,6 +236,7 @@ namespace SocketHelpers
                     xBuffer = new byte[MAX_BUFFER];
                 }
             }
+            socketClientListener = null;
         }
 
         private void listenClient2()
@@ -238,6 +251,7 @@ namespace SocketHelpers
                     xBuffer = new byte[MAX_BUFFER];
                 }
             }
+            socketClientListener1 = null;
         }
     }
 }
