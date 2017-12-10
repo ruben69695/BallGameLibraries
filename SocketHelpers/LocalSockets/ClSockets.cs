@@ -117,10 +117,16 @@ namespace SocketHelpers
             disconnectSocketLeft();
             disconnectSocketRight();
             disconnectSocketListener();
-            socketClientListener.Close();
-            socketClientListener1.Close();
-            listenerThread1.Abort();
-            listenerThread2.Abort();
+            if(socketClientListener != null)
+            {
+                socketClientListener.Close();
+                listenerThread1.Abort();
+            }
+            if (socketClientListener1 != null)
+            {
+                socketClientListener1.Close();
+                listenerThread2.Abort();
+            }
         }
 
         public void disconnectSocketLeft()
