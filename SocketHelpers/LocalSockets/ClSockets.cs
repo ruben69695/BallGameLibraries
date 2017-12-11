@@ -114,19 +114,27 @@ namespace SocketHelpers
 
         public void fullDisconnect()
         {
-            disconnectSocketLeft();
-            disconnectSocketRight();
-            disconnectSocketListener();
-            if(socketClientListener != null)
+            try
             {
-                socketClientListener.Close();
-                listenerThread1.Abort();
+                disconnectSocketLeft();
+                disconnectSocketRight();
+                disconnectSocketListener();
+                if (socketClientListener != null)
+                {
+                    socketClientListener.Close();
+                    listenerThread1.Abort();
+                }
+                if (socketClientListener1 != null)
+                {
+                    socketClientListener1.Close();
+                    listenerThread2.Abort();
+                }
             }
-            if (socketClientListener1 != null)
+            catch (Exception excp)
             {
-                socketClientListener1.Close();
-                listenerThread2.Abort();
+                Console.WriteLine(excp.Message);
             }
+
         }
 
         public void disconnectSocketLeft()
@@ -201,33 +209,41 @@ namespace SocketHelpers
 
         private void listen()
         {
-            byte[] xBuffer = new byte[MAX_BUFFER];
-
-            do
+            try
             {
-                if(socketListener != null)
+                byte[] xBuffer = new byte[MAX_BUFFER];
+
+                do
                 {
-                    if (socketClientListener == null || !socketClientListener.Connected)
+                    if (socketListener != null)
                     {
-                        socketClientListener = socketListener.AcceptTcpClient();
-                        listenerThread1 = new Thread(listenClient1);
-                        listenerThread1.Start();
-                    }
-                    else
-                    {
-                        if (socketClientListener1 == null || !socketClientListener1.Connected && socketClientListener != socketListener.AcceptTcpClient())
+                        if (socketClientListener == null || !socketClientListener.Connected)
                         {
-                            socketClientListener1 = socketListener.AcceptTcpClient();
-                            listenerThread2 = new Thread(listenClient2);
-                            listenerThread2.Start();
+                            socketClientListener = socketListener.AcceptTcpClient();
+                            listenerThread1 = new Thread(listenClient1);
+                            listenerThread1.Start();
                         }
-                    }                                        
-                }
-                //Poniendo el while true hacemos que el do while se ejecute siempre, para estar intentando añadir clientes aunque ya tenga izquierda y derecha conectados
-                //asi podemos escuchar a un cliente nuevo cuando alguno de los anteriores se deconecte
-            } while (true);
-            //Esto hace que haga el do while mientras uno de los socketClientListener no este connectado
-            //} while (socketClientListener == null||!socketClientListener.Connected || socketClientListener1 == null|| !socketClientListener1.Connected);            
+                        else
+                        {
+                            if (socketClientListener1 == null || !socketClientListener1.Connected && socketClientListener != socketListener.AcceptTcpClient())
+                            {
+                                socketClientListener1 = socketListener.AcceptTcpClient();
+                                listenerThread2 = new Thread(listenClient2);
+                                listenerThread2.Start();
+                            }
+                        }
+                    }
+                    //Poniendo el while true hacemos que el do while se ejecute siempre, para estar intentando añadir clientes aunque ya tenga izquierda y derecha conectados
+                    //asi podemos escuchar a un cliente nuevo cuando alguno de los anteriores se deconecte
+                } while (true);
+                //Esto hace que haga el do while mientras uno de los socketClientListener no este connectado
+                //} while (socketClientListener == null||!socketClientListener.Connected || socketClientListener1 == null|| !socketClientListener1.Connected);   
+            }
+            catch (Exception excp)
+            {
+                Console.WriteLine(excp.Message);
+            }
+         
         }
 
         private void listenClient1()
